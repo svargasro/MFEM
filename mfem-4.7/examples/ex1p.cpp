@@ -313,8 +313,9 @@ int main(int argc, char *argv[])
 
    double wtime = elapsed_seconds.count();
 
-   std::clog <<"Wall time:"<< wtime << " Order:"<< order << " RefLevels: "<< refLevelsParameter <<std::endl;
+//   std::clog <<"Wall time:"<< wtime << " Order:"<< order <<std::endl; //" RefLevels: "<< refLevelsParameter <<std::endl;
 
+   std::clog << wtime <<" "<< size <<std::endl;
    // 16. Send the solution by socket to a GLVis server.
    if (visualization)
    {
