@@ -1,12 +1,24 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 
-# Cambia 'ruta_del_archivo.txt' por la ruta real de tu archivo
-iter = 3
+# Ruta del directorio que quieres verificar
+directorio = './output/'
+# Obtener la lista de archivos en el directorio
+archivos = os.listdir(directorio)
+# Contar la cantidad de archivos
+cantidadArchivos = len(archivos)
 
-for i in range(1, iter+1):
-    file_path = f'output_{i}.txt'
-    print(file_path)
+
+time = np.zeros(cantidadArchivos)
+size = np.zeros(cantidadArchivos)
+
+
+for archivo in archivos:
+
+    timeArray, sizeArray = np.genfromtxt(f'./output/{archivo}',delimiter=' ', usecols=(0,1),unpack=True)
+    print(timeArray)
+    print(sizeArray)
 
 
 # # Leer las columnas del archivo .txt
