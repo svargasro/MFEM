@@ -53,5 +53,5 @@ axes.ticklabel_format(style='sci', axis='x', scilimits=(0,0))
 
 plt.tight_layout()
 
-#plt.savefig(f'ResultadosCon{NSAMPLES}Iteraciones.pdf')
-plt.show()
+plt.savefig(f'EscalamientoFuerte10Iter.pdf')
+#plt.show()
