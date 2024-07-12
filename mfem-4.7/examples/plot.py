@@ -11,35 +11,48 @@ cantidadArchivos = len(archivos)
 
 
 time = np.zeros(cantidadArchivos)
+timeDesv = np.zeros(cantidadArchivos)
 size = np.zeros(cantidadArchivos)
 
 
-for archivo in archivos:
+for i, archivo in enumerate(archivos):
 
     timeArray, sizeArray = np.genfromtxt(f'./output/{archivo}',delimiter=' ', usecols=(0,1),unpack=True)
-    print(timeArray)
-    print(sizeArray)
+
+    meanTime = np.mean(timeArray)
+    stdDesv = np.std(timeArray)
+
+    time[i] = meanTime
+    timeDesv[i] = stdDesv
+    size[i] = sizeArray[0]
 
 
-# # Leer las columnas del archivo .txt
-# data = np.loadtxt(file_path, skiprows=1)
 
-# # Separar las columnas en variables individuales
-# orden = data[:, 0]
-# error = data[:, 1]
+#Se normaliza el promedio y desviación estándar dividiendo por el tiempo y desviación estándar que tomó para el índice 0.
+time = time/time[0]
+timeDesv = timeDesv/timeDesv[0]
 
-# # Verificar si las columnas se han leído correctamente
-# print(f"Orden: {orden[:5]}")
-# print(f"Error: {error[:5]}")
 
-# plt.figure(figsize=(10, 6))
-# plt.plot(orden, error, marker='o', linestyle='-', color='b')
+errorbar= 3.0*timeDesv
 
-# # Agregar títulos y etiquetas
-# plt.title('Gráfica de Orden vs Error')
-# plt.xlabel('Orden')
-# plt.ylabel('Error')
+plt.style.use('https://github.com/dhaitz/matplotlib-stylesheets/raw/master/pitayasmoothie-light.mplstyle')
 
-# # Mostrar la gráfica
-# plt.grid(True)
-# plt.show()
+fig, axes = plt.subplots(1, 1, figsize=(7, 6))
+
+
+#Se grafica el tiempo de ejecución normalizado vs. tamaño de la matriz.
+axes.errorbar(size, time, yerr= errorbar, fmt='bo', ecolor='black', markersize=4, label="Puntos con barras de error.")
+
+#Se ajustan demás detalles del gráfico.
+axes.set_xlabel('Número de incógnitas en el sistema de ecuaciones.', fontsize=12)
+axes.set_ylabel(r'Tiempo de ejecución normalizado [ ]',fontsize=12)
+axes.legend(loc='upper left')
+axes.grid(True, linestyle='--')
+axes.set_title("Tiempo de ejecución normalizado vs. Número de incógnitas.\n 10 iteraciones", fontsize=14)
+
+axes.ticklabel_format(style='sci', axis='x', scilimits=(0,0))
+
+plt.tight_layout()
+
+#plt.savefig(f'ResultadosCon{NSAMPLES}Iteraciones.pdf')
+plt.show()
