@@ -20,17 +20,16 @@ for i, archivo in enumerate(archivos):
     timeArray, sizeArray = np.genfromtxt(f'./output/{archivo}',delimiter=' ', usecols=(0,1),unpack=True)
 
     meanTime = np.mean(timeArray)
-    stdDesv = np.std(timeArray)
 
     time[i] = meanTime
-    timeDesv[i] = stdDesv
+
     size[i] = sizeArray[0]
 
 
 
 #Se normaliza el promedio y desviación estándar dividiendo por el tiempo y desviación estándar que tomó para el índice 0.
 time = time/time[0]
-timeDesv = timeDesv/timeDesv[0]
+timeDesv  = np.std(timeArray)
 
 
 errorbar= 3.0*timeDesv
